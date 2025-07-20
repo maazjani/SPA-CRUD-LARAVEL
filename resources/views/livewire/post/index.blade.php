@@ -28,7 +28,12 @@
                 <td>{{ $post->is_published == 1 ? "Yes" : "No" }}</td>
                 <td>
                     <button @click="$dispatch('edit-mode',{id: {{ $post->id }} })" data-bs-toggle="modal" data-bs-target="#createPostModal" class="btn btn-sm btn-success">Edit</button>
-                    <button @click="$dispatch('delete-post',{id: {{ $post->id }} })" wire:confirm="Are you sure?" class="btn btn-sm btn-danger">Delete</button>
+                    <button
+                        x-data
+                        @click="if(confirm('Are you sure you want to delete this post?')) { $dispatch('delete-post', {id: {{ $post->id }} }) }"
+                        class="btn btn-sm btn-danger">
+                        Delete
+                    </button>
                 </td>
             </tr>
             @endforeach
